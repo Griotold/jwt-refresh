@@ -8,6 +8,14 @@ Content-Type: application/json
   "nickname": "nick"
 }
 
+### 리프레시 토큰
+POST localhost:8080/api/v1/auth/refresh-token
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUVNQkVSIiwic3ViIjoic29jaWFsMTIzNCIsImlhdCI6MTc0MjcxOTE3OCwiZXhwIjoxNzQzMzIzOTc4fQ.ZZIsFBPdzXO6BcV4TQX4bpL1EFeF-2pMIe5bEL67m0E"
+}
+
 ### 포스트 조회
 GET localhost:8080/api/v1/posts
 Content-Type: application/json

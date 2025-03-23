@@ -1,6 +1,7 @@
 package com.griotold.jwt_refresh.config.filter;
 
 import com.griotold.jwt_refresh.config.JwtService;
+import com.griotold.jwt_refresh.domain.entity.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

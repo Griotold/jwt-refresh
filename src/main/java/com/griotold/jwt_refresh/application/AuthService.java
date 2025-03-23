@@ -1,6 +1,7 @@
 package com.griotold.jwt_refresh.application;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.griotold.jwt_refresh.config.JwtService;
 import com.griotold.jwt_refresh.domain.entity.User;
 import com.griotold.jwt_refresh.domain.enums.Provider;
@@ -10,8 +11,6 @@ import com.griotold.jwt_refresh.presentation.AuthRequest;
 import com.griotold.jwt_refresh.presentation.AuthResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,9 +38,22 @@ public class AuthService {
             user = optionalUser.get();
         }
 
-        // 항상 userId가 있는 상태로 토큰 생성
         String jwtToken = jwtService.generateToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
 
-        return new AuthResponse(jwtToken);
+        return new AuthResponse(jwtToken, refreshToken);
+    }
+
+    public AuthResponse refreshToken(String refreshToken) {
+        final String socialId; // username
+        socialId = jwtService.extractSocialId(refreshToken);
+        if (socialId != null) {
+            User user= this.userRepository.findBySocialId(socialId).get();
+            if (jwtService.isTokenValid(refreshToken, user)) {
+                String accessToken = jwtService.generateToken(user);
+                return new AuthResponse(accessToken, refreshToken);
+            }
+        }
+        return null;
     }
 }

@@ -52,9 +52,8 @@ public class JwtService {
         return null;
     }
 
-    public String generateRefreshToken(UserDetails userDetails) {
-//        return buildToken(new HashMap<>(), userDetails, refreshExpiration);
-        return null;
+    public String generateRefreshToken(User user) {
+        return buildToken(user, refreshExpiration);
     }
 
 //    public String createAccessToken(Long userId, Role role, String username) {
@@ -77,6 +76,11 @@ public class JwtService {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256).compact();
+    }
+
+    public boolean isTokenValid(String token, User user) {
+        final String socialId = extractSocialId(token);
+        return (socialId.equals(user.getSocialId())) && !isTokenExpired(token);
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
