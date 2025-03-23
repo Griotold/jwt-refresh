@@ -24,11 +24,11 @@ public class LoginUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getSocialId();
+        return "";
     }
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return user.getSocialId();
     }
 }

@@ -28,8 +28,8 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return (email) -> {
-            User user = userRepository.findByEmail(email)
+        return (socialId) -> {
+            User user = userRepository.findBySocialId(socialId)
                     .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
             return new LoginUser(user);
         };
