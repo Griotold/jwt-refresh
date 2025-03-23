@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    h2:
+      console:
+        enabled: true
+        path: /h2-console
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        query:
+          in_clause_parameter_padding: true # Hibernate에서 IN 절의 매개변수를 2의 거듭제곱 단위로 패딩하여 쿼리 캐시 효율성을 높이는 기능
+    open-in-view: false
+
+
+application:
+  security:
+    jwt:
+      secret-key: 462D4A614E645266556A586E3272357538782F413F4428472B4B625065536856
+      expiration: 60000 # 86400000 # 1 day
+      refresh-token:
+        expiration: 604800000 # 7 days
